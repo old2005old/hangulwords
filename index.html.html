@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hangul Words — Korean Vocabulary Practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700;900&family=Noto+Sans+KR:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --burgundy:#7A1F3D; --burgundy-d:#561229; --burgundy-l:#A3405F; --burgundy-t:#F3E3E8;
+  --tiffany:#0ABAB5; --tiffany-l:#81D8D0; --tiffany-t:#E2F6F4; --tiffany-d:#07827E;
+  --ivory:#FFFDF4; --ivory-2:#F7F1E1; --ivory-3:#EDE4CC;
+  --ink:#2E1A20; --muted:#7D6A6F;
+  --radius:18px; --shadow:0 10px 30px -12px rgba(86,18,41,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--ivory);color:var(--ink);font-family:"Noto Sans KR",system-ui,sans-serif;min-height:100%}
+body{background:
+  radial-gradient(circle at 92% -10%, rgba(129,216,208,.35), transparent 40%),
+  radial-gradient(circle at -10% 110%, rgba(122,31,61,.10), transparent 45%),
+  var(--ivory);min-height:100vh}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.kr{font-family:"Noto Serif KR",serif}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:rgba(255,253,244,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--ivory-3)}
+.bar{max-width:1040px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.seal{width:40px;height:40px;border-radius:12px;background:var(--burgundy);color:var(--ivory);display:grid;place-items:center;font-family:"Noto Serif KR",serif;font-weight:900;font-size:20px;box-shadow:inset 0 -3px 0 var(--burgundy-d)}
+.brand h1{font-family:"Playfair Display",serif;font-size:21px;color:var(--burgundy);letter-spacing:.2px}
+.brand small{display:block;font-size:11px;color:var(--tiffany-d);letter-spacing:2px;text-transform:uppercase;font-weight:700}
+.nav{display:flex;gap:8px;align-items:center}
+.navbtn{padding:9px 14px;border-radius:999px;font-weight:700;font-size:14px;color:var(--burgundy);border:1.5px solid transparent;display:flex;align-items:center;gap:6px}
+.navbtn:hover{background:var(--burgundy-t)}
+.navbtn.active{background:var(--burgundy);color:var(--ivory)}
+.badge{background:var(--tiffany);color:#fff;border-radius:999px;font-size:11px;padding:2px 7px;min-width:20px;text-align:center}
+.navbtn.active .badge{background:var(--tiffany-l);color:var(--burgundy-d)}
+.contact-panel{display:none;border-top:1px solid var(--ivory-3);background:rgba(255,253,244,.97)}
+.contact-panel.open{display:block}
+.contact-inner{max-width:1040px;margin:0 auto;padding:14px 20px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.contact-inner strong{color:var(--burgundy-d);margin-right:4px}
+.contact-link{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid var(--ivory-3);border-radius:12px;background:#fff;color:var(--burgundy);font-weight:700;text-decoration:none}
+.contact-link:hover{border-color:var(--tiffany);background:var(--tiffany-t)}
+.contact-close{margin-left:auto;color:var(--muted);font-weight:700;padding:8px 10px;border-radius:9px}
+.contact-close:hover{background:var(--burgundy-t)}
+
+main{max-width:1040px;margin:0 auto;padding:28px 20px 80px}
+.view{display:none;animation:fade .35s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center;margin-bottom:28px}
+.hero h2{font-family:"Playfair Display",serif;font-size:clamp(28px,4.4vw,44px);line-height:1.12;color:var(--burgundy-d)}
+.hero h2 em{color:var(--tiffany-d);font-style:italic}
+.hero p{color:var(--muted);margin-top:10px;line-height:1.6;max-width:46ch}
+.namebox{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+.namebox input{flex:1;min-width:170px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--ivory-3);background:#fff;font:inherit;color:var(--ink)}
+.namebox input:focus{outline:none;border-color:var(--tiffany)}
+.stats{background:var(--burgundy);color:var(--ivory);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.stats::after{content:"한";position:absolute;right:-10px;bottom:-40px;font-family:"Noto Serif KR",serif;font-size:170px;font-weight:900;color:rgba(255,255,255,.07)}
+.stats h3{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--tiffany-l)}
+.stats .greet{font-family:"Playfair Display",serif;font-size:22px;margin:4px 0 14px}
+.srow{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative;z-index:1}
+.sbox{background:rgba(255,255,255,.08);border-radius:12px;padding:10px}
+.sbox b{display:block;font-size:24px}
+.sbox span{font-size:11.5px;opacity:.8}
+
+.sec-title{display:flex;align-items:baseline;justify-content:space-between;margin:8px 0 14px}
+.sec-title h3{font-family:"Playfair Display",serif;font-size:24px;color:var(--burgundy-d)}
+.sec-title span{color:var(--muted);font-size:14px}
+
+/* Topic cards */
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.tcard{background:#fff;border:1.5px solid var(--ivory-3);border-radius:var(--radius);padding:20px;text-align:left;transition:.2s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.tcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--tiffany-l)}
+.tnum{font-size:12px;letter-spacing:2px;font-weight:700;color:var(--tiffany-d);text-transform:uppercase}
+.tname{font-family:"Playfair Display",serif;font-size:21px;color:var(--burgundy-d)}
+.tkr{font-family:"Noto Serif KR",serif;color:var(--burgundy-l);font-size:15px}
+.tmeta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:10px}
+.prog{height:6px;border-radius:999px;background:var(--ivory-2);overflow:hidden;margin-top:6px}
+.prog i{display:block;height:100%;background:linear-gradient(90deg,var(--tiffany),var(--tiffany-l));border-radius:999px}
+.tcard .emoji{position:absolute;right:14px;top:14px;font-family:"Noto Serif KR",serif;font-size:34px;color:var(--tiffany-t);font-weight:900}
+
+/* Setup panel */
+.panel{background:#fff;border:1.5px solid var(--ivory-3);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow)}
+.back{color:var(--burgundy);font-weight:700;font-size:14px;margin-bottom:14px;display:inline-flex;gap:6px;align-items:center}
+.back:hover{text-decoration:underline}
+.setup-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:18px}
+.setup-head h2{font-family:"Playfair Display",serif;color:var(--burgundy-d);font-size:30px}
+.opt-group{margin:16px 0}
+.opt-group label.l{font-size:12px;letter-spacing:1.8px;text-transform:uppercase;font-weight:700;color:var(--muted);display:block;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:10px 16px;border-radius:999px;border:1.5px solid var(--ivory-3);background:var(--ivory);font-weight:600;font-size:14px}
+.chip.sel{background:var(--tiffany-t);border-color:var(--tiffany);color:var(--tiffany-d)}
+.btn{padding:13px 22px;border-radius:12px;font-weight:700;font-size:15px;display:inline-flex;align-items:center;gap:8px;transition:.15s}
+.btn-p{background:var(--burgundy);color:var(--ivory);box-shadow:inset 0 -3px 0 var(--burgundy-d)}
+.btn-p:hover{background:var(--burgundy-l)}
+.btn-t{background:var(--tiffany);color:#fff;box-shadow:inset 0 -3px 0 var(--tiffany-d)}
+.btn-t:hover{filter:brightness(1.06)}
+.btn-o{border:1.5px solid var(--burgundy);color:var(--burgundy)}
+.btn-o:hover{background:var(--burgundy-t)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+.wordlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:18px;max-height:340px;overflow:auto;padding-right:4px}
+.wl{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--ivory);border:1px solid var(--ivory-2);font-size:14px}
+.wl .kr{font-weight:700;color:var(--burgundy-d);font-size:16px}
+.wl span:last-child{color:var(--muted);text-align:right}
+.wl.miss{border-color:#E8C1CC;background:var(--burgundy-t)}
+
+/* Quiz */
+.qtop{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.qtop .prog{flex:1;height:10px}
+.qcount{font-weight:700;color:var(--burgundy);font-size:14px;white-space:nowrap}
+.quit{color:var(--muted);font-weight:700;font-size:14px}
+.qcard{background:#fff;border-radius:24px;border:1.5px solid var(--ivory-3);box-shadow:var(--shadow);padding:36px 24px;text-align:center;position:relative}
+.qlabel{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;color:var(--tiffany-d)}
+.qword{font-size:clamp(34px,7vw,60px);color:var(--burgundy-d);margin:14px 0 6px;line-height:1.2;word-break:keep-all}
+.qword.lat{font-family:"Playfair Display",serif;font-size:clamp(26px,5vw,42px)}
+.speak{width:42px;height:42px;border-radius:50%;background:var(--tiffany-t);color:var(--tiffany-d);display:inline-grid;place-items:center;margin-top:6px}
+.speak:hover{background:var(--tiffany-l)}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.optn{padding:18px 16px;border-radius:14px;border:2px solid var(--ivory-3);background:var(--ivory);font-size:17px;font-weight:600;text-align:left;display:flex;gap:12px;align-items:center;transition:.15s;min-height:66px}
+.optn .k{width:28px;height:28px;flex:none;border-radius:8px;background:#fff;border:1.5px solid var(--ivory-3);display:grid;place-items:center;font-size:13px;color:var(--muted)}
+.optn.krf{font-family:"Noto Serif KR",serif;font-size:20px}
+.optn:hover:not(:disabled){border-color:var(--tiffany);background:var(--tiffany-t)}
+.optn.ok{border-color:var(--tiffany);background:var(--tiffany-t);color:var(--tiffany-d)}
+.optn.ok .k{background:var(--tiffany);color:#fff;border-color:var(--tiffany)}
+.optn.bad{border-color:var(--burgundy);background:var(--burgundy-t);color:var(--burgundy)}
+.optn.bad .k{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+.optn:disabled{cursor:default}
+.feedback{min-height:56px;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.fb{font-weight:700;font-size:15px}
+.fb.good{color:var(--tiffany-d)} .fb.wrong{color:var(--burgundy)}
+.hint{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+/* Results */
+.result-hero{text-align:center;padding:10px 0 20px}
+.ring{width:150px;height:150px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;position:relative}
+.ring b{font-family:"Playfair Display",serif;font-size:40px;color:var(--burgundy-d);background:#fff;width:118px;height:118px;border-radius:50%;display:grid;place-items:center}
+.result-hero h2{font-family:"Playfair Display",serif;font-size:30px;color:var(--burgundy-d)}
+.result-hero p{color:var(--muted);margin-top:6px}
+.rlist{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+.ritem{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--ivory);border:1px solid var(--ivory-2)}
+.ritem .ico{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px;color:#fff;font-weight:700}
+.ritem.ok .ico{background:var(--tiffany)} .ritem.no .ico{background:var(--burgundy)}
+.ritem .w{font-family:"Noto Serif KR",serif;font-weight:700;color:var(--burgundy-d);font-size:17px}
+.ritem .m{font-size:13.5px;color:var(--muted)}
+.ritem .chosen{font-size:13px;color:var(--burgundy);text-align:right}
+.ritem .chosen s{opacity:.8}
+
+/* Mistakes */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.mgroup{margin-bottom:22px}
+.mgroup h4{font-family:"Playfair Display",serif;font-size:20px;color:var(--burgundy-d);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.mtable{width:100%;border-collapse:separate;border-spacing:0 6px}
+.mtable th{font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 12px;font-weight:700}
+.mtable td{background:#fff;padding:12px;border-top:1px solid var(--ivory-3);border-bottom:1px solid var(--ivory-3);font-size:14.5px;vertical-align:middle}
+.mtable td:first-child{border-left:1px solid var(--ivory-3);border-radius:12px 0 0 12px}
+.mtable td:last-child{border-right:1px solid var(--ivory-3);border-radius:0 12px 12px 0}
+.mtable .kr{font-weight:700;color:var(--burgundy-d);font-size:17px}
+.chosenlist{display:flex;flex-wrap:wrap;gap:4px}
+.ctag{background:var(--burgundy-t);color:var(--burgundy);border-radius:6px;padding:2px 8px;font-size:12.5px}
+.times{display:inline-grid;place-items:center;min-width:28px;height:28px;border-radius:8px;background:var(--burgundy);color:#fff;font-weight:700;font-size:13px}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty .big{font-family:"Noto Serif KR",serif;font-size:60px;color:var(--tiffany-l);font-weight:900}
+.empty h3{font-family:"Playfair Display",serif;color:var(--burgundy-d);font-size:24px;margin:6px 0}
+
+.modal{position:fixed;inset:0;background:rgba(46,26,32,.45);display:none;place-items:center;z-index:50;padding:20px}
+.modal.on{display:grid}
+.modal .box{background:var(--ivory);border-radius:20px;padding:24px;max-width:380px;width:100%;box-shadow:var(--shadow)}
+.modal h3{font-family:"Playfair Display",serif;color:var(--burgundy-d);font-size:22px}
+.modal p{color:var(--muted);margin:8px 0 18px;line-height:1.5}
+
+footer{text-align:center;color:var(--muted);font-size:12.5px;padding:20px}
+
+@media (max-width:720px){
+  .hero{grid-template-columns:1fr}
+  .options{grid-template-columns:1fr}
+  .navbtn .lbl{display:none}
+  .brand small{display:none}
+  .mtable .hide-m{display:none}
+  .ritem{grid-template-columns:auto 1fr}
+  .ritem .chosen{grid-column:2;text-align:left}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand" onclick="go('home')">
+      <div class="seal">한</div>
+      <div><h1>Hangul Words</h1><small>Korean · O'zbek</small></div>
+    </div>
+    <nav class="nav">
+      <button class="navbtn active" data-nav="home" onclick="go('home')">📚 <span class="lbl">Topics</span></button>
+      <button class="navbtn" data-nav="mistakes" onclick="go('mistakes')">📝 <span class="lbl">My mistakes</span> <span class="badge" id="mBadge">0</span></button>
+      <button class="navbtn" type="button" aria-expanded="false" aria-controls="contactPanel" onclick="toggleContact()">✉️ <span class="lbl">Contact</span></button>
+    </nav>
+  </div>
+  <div class="contact-panel" id="contactPanel">
+    <div class="contact-inner">
+      <strong>Get in touch</strong>
+      <a class="contact-link" href="https://t.me/iivvelt" target="_blank" rel="noopener noreferrer">✈️ Telegram · @iivvelt</a>
+      <a class="contact-link" href="mailto:old2005old@gmail.com">✉️ old2005old@gmail.com</a>
+      <button class="contact-close" type="button" onclick="toggleContact(false)">Close ✕</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section class="view on" id="v-home">
+    <div class="hero">
+      <div>
+        <h2>Learn Korean words, <em>one topic</em> at a time.</h2>
+        <p>Pick a topic, take the quiz, and every word you miss is saved to <b>My mistakes</b> so you can review it and practise it again.</p>
+        <div class="namebox">
+          <input id="nameIn" placeholder="Your name (optional)" maxlength="30">
+          <button class="btn btn-t" onclick="saveName()">Save</button>
+        </div>
+      </div>
+      <div class="stats">
+        <h3>Your progress</h3>
+        <div class="greet" id="greet">안녕하세요!</div>
+        <div class="srow">
+          <div class="sbox"><b id="stQuiz">0</b><span>quizzes taken</span></div>
+          <div class="sbox"><b id="stAcc">–</b><span>accuracy</span></div>
+          <div class="sbox"><b id="stMiss">0</b><span>words to review</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="sec-title"><h3>Topics</h3><span id="topicCount"></span></div>
+    <div class="topics" id="topicGrid"></div>
+  </section>
+
+  <!-- SETUP -->
+  <section class="view" id="v-setup">
+    <button class="back" onclick="go('home')">← All topics</button>
+    <div class="panel">
+      <div class="setup-head">
+        <div>
+          <div class="tnum" id="suNum"></div>
+          <h2 id="suName"></h2>
+          <div class="tkr" id="suKr"></div>
+        </div>
+        <div style="color:var(--muted);font-size:14px" id="suMeta"></div>
+      </div>
+      <div class="opt-group">
+        <label class="l">Quiz direction</label>
+        <div class="chips" id="dirChips">
+          <button class="chip sel" data-v="ko">한국어 → O'zbek</button>
+          <button class="chip" data-v="uz">O'zbek → 한국어</button>
+          <button class="chip" data-v="mix">Mixed</button>
+        </div>
+      </div>
+      <div class="opt-group">
+        <label class="l">Number of questions</label>
+        <div class="chips" id="lenChips">
+          <button class="chip" data-v="10">10</button>
+          <button class="chip" data-v="20">20</button>
+          <button class="chip sel" data-v="all">All words</button>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-p" onclick="startQuiz(false)">Start quiz →</button>
+        <button class="btn btn-t" id="suMissBtn" onclick="startQuiz(true)">Practise my mistakes</button>
+      </div>
+      <div class="opt-group" style="margin-top:26px">
+        <label class="l">Words in this topic</label>
+        <div class="wordlist" id="suWords"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="view" id="v-quiz">
+    <div class="qtop">
+      <button class="quit" onclick="askQuit()">✕ Quit</button>
+      <div class="prog"><i id="qProg" style="width:0"></i></div>
+      <div class="qcount" id="qCount"></div>
+    </div>
+    <div class="qcard">
+      <div class="qlabel" id="qLabel"></div>
+      <div class="qword kr" id="qWord"></div>
+      <button class="speak" id="qSpeak" title="Listen" onclick="speakCurrent()">🔊</button>
+      <div class="options" id="qOpts"></div>
+      <div class="feedback" id="qFb"></div>
+      <div class="hint">Tip: press 1–4 to answer, Enter for next.</div>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="view" id="v-result">
+    <div class="panel">
+      <div class="result-hero">
+        <div class="ring" id="rRing"><b id="rScore"></b></div>
+        <h2 id="rTitle"></h2>
+        <p id="rSub"></p>
+        <div class="actions" style="justify-content:center">
+          <button class="btn btn-p" onclick="startQuiz(false)">Try again</button>
+          <button class="btn btn-t" id="rMissBtn" onclick="startQuiz(true)">Practise mistakes</button>
+          <button class="btn btn-o" onclick="go('mistakes')">Open My mistakes</button>
+          <button class="btn btn-o" onclick="go('home')">Topics</button>
+        </div>
+      </div>
+      <div class="sec-title"><h3 style="font-size:20px">This quiz</h3><span id="rFilterInfo"></span></div>
+      <div class="chips" style="margin-bottom:6px" id="rFilter">
+        <button class="chip sel" data-v="no">Mistakes only</button>
+        <button class="chip" data-v="all">All answers</button>
+      </div>
+      <div class="rlist" id="rList"></div>
+    </div>
+  </section>
+
+  <!-- MISTAKES -->
+  <section class="view" id="v-mistakes">
+    <div class="sec-title"><h3>My mistakes</h3><span>Words you chose wrongly, by topic</span></div>
+    <div class="tabs chips" id="mTabs"></div>
+    <div id="mBody"></div>
+  </section>
+  <!-- APP UPGRADES -->
+  <section id="upgradePanel" class="panel" style="margin-top:24px">
+    <div class="sec-title"><h3>✨ Learning dashboard</h3><span>Profile · XP · streaks</span></div>
+    <div class="topics" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+      <div class="sbox" style="background:var(--tiffany-t);color:var(--ink)"><b id="xpDisplay">0 XP</b><span>Experience points</span></div>
+      <div class="sbox" style="background:var(--tiffany-t);color:var(--ink)"><b id="levelDisplay">Level 1</b><span>Current level</span></div>
+      <div class="sbox" style="background:var(--tiffany-t);color:var(--ink)"><b id="streakDisplay">0 days</b><span>Study streak</span></div>
+      <div class="sbox" style="background:var(--tiffany-t);color:var(--ink)"><b id="badgeDisplay">0</b><span>Badges earned</span></div>
+    </div>
+    <div class="actions">
+      <button class="btn btn-p" onclick="dailyChallenge()">🎯 Daily challenge (10)</button>
+      <button class="btn btn-o" onclick="showLeaderboard()">🏆 Local leaderboard</button>
+      <button class="btn btn-o" onclick="showDashboard()">📊 Teacher dashboard</button>
+    </div>
+    <div class="opt-group"><label class="l">Profiles on this device</label><div class="actions" style="margin-top:0"><input id="profileIn" placeholder="New learner name" style="padding:12px;border-radius:10px;border:1px solid var(--ivory-3)"><button class="btn btn-t" onclick="addProfile()">Add profile</button><button class="btn btn-o" onclick="switchProfilePrompt()">Switch profile</button></div><div id="profileInfo" style="margin-top:8px;color:var(--muted);font-size:13px"></div></div>
+    <div class="opt-group"><label class="l">Backup / transfer progress between devices</label><div class="actions" style="margin-top:0"><button class="btn btn-o" onclick="exportProgress()">⬇ Export progress</button><button class="btn btn-o" onclick="document.getElementById('importFile').click()">⬆ Import progress</button><input id="importFile" type="file" accept="application/json" style="display:none" onchange="importProgress(event)"></div><p class="hint">Import/export transfers your progress. True automatic cloud sync needs a hosted database and account setup.</p></div>
+    <div id="dashboardOut" style="margin-top:16px"></div>
+  </section>
+</main>
+
+<div class="modal" id="modal"><div class="box">
+  <h3 id="mdTitle"></h3><p id="mdText"></p>
+  <div class="actions" style="margin-top:0;justify-content:flex-end">
+    <button class="btn btn-o" onclick="closeModal()">Cancel</button>
+    <button class="btn btn-p" id="mdOk">OK</button>
+  </div>
+</div></div>
+
+<footer style="padding:24px 16px 30px;line-height:1.8">
+  <div>Hangul Words · Progress is saved in this browser on this device.</div>
+</footer>
+
+<script>
+function toggleContact(force){
+  const panel=document.getElementById("contactPanel");
+  const button=document.querySelector("[aria-controls='contactPanel']");
+  const open=typeof force==="boolean"?force:!panel.classList.contains("open");
+  panel.classList.toggle("open",open);
+  if(button) button.setAttribute("aria-expanded",String(open));
+}
+
+/* ============ TOPIC DATA ============ */
+const TOPICS = [
+{ id:"t1", name:"Family", kr:"가족", mark:"家", words:`
+할머니|buvi
+할아버지|bobo
+아내|rafiqa
+남편|er
+딸|qiz farzand
+누나|opa (oʻgʻillar uchun)
+오빠|aka (qizlar uchun)
+언니|opa (qizlar uchun)
+형|aka (oʻgʻillar uchun)
+아들|oʻgʻil farzand
+여동생|singil
+남동생|uka
+성함|ism (hurmat shakli)
+댁|uy (hurmat shakli)
+계시다|bor (hurmat shakli)
+주무시다|uxlamoq (hurmat shakli)
+드시다|yemoq (hurmat shakli)
+연세|yosh (hurmat shakli)
+분|odam (hurmat shakli), minut
+수학|matematika
+역사|tarix
+운전하다|mashina haydamoq
+뭘요|arzimaydi, unchalikmas
+동아리|toʻgarak
+인사하다|salomlashmoq
+친절하다|mehribon
+다니다|qatnamoq
+사장님|direktor
+멋있다|kelishgan
+부모님|ota-ona
+미인|sohibjamol
+대학교|universitet
+강아지|kuchukcha
+웃다|kulmoq
+가족|oila
+취미|hobby
+태어나다|tugʻilmoq
+되다|boʻlmoq
+다른 나라|boshqa davlat
+아기|chaqaloq`},
+{ id:"t2", name:"Daily Routine", kr:"하루 일과", mark:"日", words:`
+일어나다|uygʻonmoq
+새벽|tong
+아침|ertalab
+저녁|kechqurun
+밤|tun
+낮|kunduzi
+오전|ertalab
+오후|abeddan keyin
+청소하다|uy yigʻishtirmoq
+회의하다|majlis qilmoq
+빨래하다|kir yuvmoq
+샤워하다|dush qabul qilmoq
+쯤|taxminan
+반|yarim
+시험을 보다|imtihon topshirmoq
+그리다|chizmoq
+이번|bu safar
+방학|ta’til
+조금 후|birozdan keyin
+조금 전|biroz oldin
+박물관|muzey
+보내다|joʻnatmoq, oʻtkazmoq
+연습|mashq
+데이트하다|uchrashuvga chiqmoq
+전통|milliy
+그렇지만|lekin`},
+{ id:"t3", name:"Body & Health", kr:"몸과 건강", mark:"身", words:`
+발|oyoq (past qismi)
+다리|oyoq (tepa qismi)
+팔|qoʻl (tepa qismi)
+손|qoʻl (kaft qismi)
+얼굴|yuz
+입|ogʻiz
+귀|quloq
+코|burun
+몸|tana
+눈|koʻz
+무릎|tizza
+가슴|koʻkrak
+어깨|yelka
+기침하다|yoʻtalmoq
+열이 나다|isitmasi chiqmoq
+콧물이 나다|burnidan suv oqmoq
+머리|bosh, soch
+목|tomoq, boʻyin
+허리|bel
+배|qorin, kema, nok
+아프다|kasal boʻlmoq, ogʻrimoq
+예쁘다|chiroyli
+바쁘다|band boʻlmoq
+쓰다|yozmoq
+편지|xat
+나쁘다|yomon
+고프다|och qolmoq
+알겠다|tushunarli
+늦다|kechikmoq
+담배를 피우다|sigaret chekmoq
+약|dori
+유행이다|urfda
+감기에 걸리다|shamollamoq
+술|aroq
+오래|uzoq vaqt
+푹 쉬다|miriqib dam olmoq
+말하다|gapirmoq, aytmoq
+목욕하다|dush qabul qilmoq
+씻다|yuvmoq
+내년|kelasi yil
+손님|mijoz, mehmon
+결혼하다|turmush qurmoq
+괜찮다|ok
+다행이다|xayriyat
+내다|topshirmoq, toʻlamoq
+리포트|hisobot
+너무|judayam
+생신|tugʻilgan kun (hurmat shakli)
+무리하다|urintirmoq
+알람|budilnik
+싸우다|urushmoq
+끄다|oʻchirmoq
+걱정|tashvish
+발음|talaffuz
+이렇게|bunday
+파|koʻkpiyoz
+붙이다|yopishtirmoq
+헹구다|ogʻizni chaymoq
+몸살|holsizlik
+마사지하다|masaj qilmoq`},
+{ id:"t4", name:"Messages & Incidents", kr:"문자와 사고", mark:"事", words:`
+문자|sms
+받다|olmoq
+사무실|ofis
+오랜만이에요|koʻrishmaganimizga uzoq vaqt boʻldi
+맛없다|bemaza
+왜|nega
+늦잠을 자다|uxlab qolmoq
+그럼요|albatta
+이따|birozdan keyin
+아까|boya
+여행사|sayohat agentligi
+다|hammasi
+장소|joy
+도둑이 들다|oʻgʻri kirmoq
+불이 나다|yongʻin chiqmoq
+사고가 나다|avariya chiqmoq`}
+].map(t=>({...t, list:t.words.trim().split("\n").map(l=>{const [ko,uz]=l.split("|");return {ko:ko.trim(),uz:uz.trim()};})}));
+
+/* ============ STORAGE (per browser) ============ */
+const KEY="hangulWords.v1";
+let store={name:"",mistakes:{},stats:{quizzes:0,correct:0,total:0},best:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)); if(s) store={...store,...s};}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store));}catch(e){} if(typeof upgrade!=="undefined") usave();}
+// Upgrade layer: profiles, XP, streaks, badges and transferable backups
+const UKEY="hangulWords.upgrades.v1"; let upgrade={profiles:{},active:"Learner",xp:0,streak:0,lastDay:"",badges:[],dailyDone:"",leaderboard:[]};
+try{const u=JSON.parse(localStorage.getItem(UKEY));if(u)upgrade={...upgrade,...u};}catch(e){}
+function usave(){upgrade.profiles[upgrade.active]=store;try{localStorage.setItem(UKEY,JSON.stringify(upgrade));}catch(e){}}
+function dayKey(){return new Date().toLocaleDateString("en-CA");}
+function refreshUpgrade(){document.getElementById("xpDisplay").textContent=(upgrade.xp||0)+" XP";document.getElementById("levelDisplay").textContent="Level "+(Math.floor((upgrade.xp||0)/100)+1);document.getElementById("streakDisplay").textContent=(upgrade.streak||0)+" days";document.getElementById("badgeDisplay").textContent=(upgrade.badges||[]).length;document.getElementById("profileInfo").textContent="Active profile: "+upgrade.active+" · "+Object.keys(upgrade.profiles).length+" profile(s)";}
+function awardQuiz(pct,n){upgrade.xp=(upgrade.xp||0)+Math.max(5,pct)+n;const today=dayKey();if(upgrade.lastDay!==today){const yesterday=new Date();yesterday.setDate(yesterday.getDate()-1);const y=yesterday.toLocaleDateString("en-CA");upgrade.streak=upgrade.lastDay===y?(upgrade.streak||0)+1:1;upgrade.lastDay=today;}const checks=[{id:"first",label:"First quiz",ok:store.stats.quizzes>=1},{id:"perfect",label:"Perfect score",ok:pct===100},{id:"five",label:"Quiz explorer",ok:store.stats.quizzes>=5},{id:"streak3",label:"3-day streak",ok:upgrade.streak>=3},{id:"words50",label:"Word collector",ok:upgrade.xp>=500}];checks.forEach(b=>{if(b.ok&&!upgrade.badges.includes(b.id))upgrade.badges.push(b.id);});upgrade.leaderboard=upgrade.leaderboard||[];upgrade.leaderboard=upgrade.leaderboard.filter(x=>x.name!==upgrade.active);upgrade.leaderboard.push({name:upgrade.active,xp:upgrade.xp,quizzes:store.stats.quizzes});upgrade.leaderboard.sort((a,b)=>b.xp-a.xp);usave();}
+function addProfile(){const n=document.getElementById("profileIn").value.trim();if(!n)return;usave();upgrade.profiles[n]={name:n,mistakes:{},stats:{quizzes:0,correct:0,total:0},best:{}};upgrade.active=n;store=upgrade.profiles[n];upgrade.xp=0;upgrade.streak=0;upgrade.lastDay="";upgrade.badges=[];usave();document.getElementById("profileIn").value="";renderHome();refreshUpgrade();}
+function switchProfilePrompt(){const n=prompt("Enter an existing profile name:\n"+Object.keys(upgrade.profiles).join(", "));if(!n||!upgrade.profiles[n]){if(n)alert("Profile not found.");return;}usave();upgrade.active=n;store=upgrade.profiles[n];usave();renderHome();refreshUpgrade();}
+function exportProgress(){usave();const data={store,upgrade};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="hangul-words-progress.json";a.click();URL.revokeObjectURL(a.href);}
+function importProgress(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.store)store=d.store;if(d.upgrade)upgrade={...upgrade,...d.upgrade};save();usave();renderHome();refreshUpgrade();alert("Progress imported!");}catch(err){alert("That file doesn't appear to be a valid backup.");}};r.readAsText(f);e.target.value="";}
+function showLeaderboard(){const rows=(upgrade.leaderboard||[]).slice().sort((a,b)=>b.xp-a.xp);document.getElementById("dashboardOut").innerHTML='<div class="panel"><h3>🏆 Leaderboard (profiles on this device)</h3>'+ (rows.length?rows.map((r,i)=>`<p style="padding:8px">${i+1}. <b>${esc(r.name)}</b> — ${r.xp} XP · ${r.quizzes} quizzes</p>`).join(""):'<p>No quiz results yet.</p>')+'</div>'; }
+function showDashboard(){const total=store.stats.total,acc=total?Math.round(store.stats.correct/total*100):0;document.getElementById("dashboardOut").innerHTML=`<div class="panel"><h3>📊 Learner report: ${esc(upgrade.active)}</h3><p style="margin:10px 0">Quizzes: <b>${store.stats.quizzes}</b> · Answered: <b>${total}</b> · Accuracy: <b>${acc}%</b> · Mistakes needing review: <b>${totalMiss()}</b></p><h4 style="margin:12px 0">Topic performance</h4>${TOPICS.map(t=>`<div style="margin:10px 0"><b>${esc(t.name)}</b> — best ${store.best[t.id]??"—"}% · ${missCount(t.id)} words to revisit<div class="prog"><i style="width:${store.best[t.id]||0}%"></i></div></div>`).join("")}<p class="hint">This report is for the active local profile. Teacher dashboard access is not password-protected yet.</p></div>`;}
+function dailyChallenge(){current=TOPICS[Math.floor(Math.random()*TOPICS.length)];cfg.len="10";cfg.dir="mix";document.querySelector('#lenChips [data-v="10"]')?.click();document.querySelector('#dirChips [data-v="mix"]')?.click();startQuiz(false);}
+
+function mistakesOf(tid){return store.mistakes[tid]||(store.mistakes[tid]={});}
+function missCount(tid){return Object.keys(store.mistakes[tid]||{}).length;}
+function totalMiss(){return TOPICS.reduce((a,t)=>a+missCount(t.id),0);}
+
+/* ============ NAV ============ */
+let current=null, cfg={dir:"ko",len:"all"};
+function go(v){
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));
+  document.getElementById("v-"+v).classList.add("on");
+  document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.nav===v||(v!=="mistakes"&&b.dataset.nav==="home"&&v==="home")));
+  if(v==="home") renderHome();
+  if(v==="mistakes") renderMistakes();
+  window.scrollTo({top:0,behavior:"smooth"});
+  quizActive = v==="quiz";
+}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ============ HOME ============ */
+function renderHome(){
+  refreshUpgrade();
+  document.getElementById("nameIn").value=store.name||"";
+  document.getElementById("greet").textContent=store.name?`안녕하세요, ${store.name}!`:"안녕하세요!";
+  document.getElementById("stQuiz").textContent=store.stats.quizzes;
+  document.getElementById("stAcc").textContent=store.stats.total?Math.round(store.stats.correct/store.stats.total*100)+"%":"–";
+  document.getElementById("stMiss").textContent=totalMiss();
+  document.getElementById("mBadge").textContent=totalMiss();
+  const total=TOPICS.reduce((a,t)=>a+t.list.length,0);
+  document.getElementById("topicCount").textContent=`${TOPICS.length} topics · ${total} words`;
+  document.getElementById("topicGrid").innerHTML=TOPICS.map((t,i)=>{
+    const best=store.best[t.id]; const m=missCount(t.id);
+    return `<button class="tcard" onclick="openTopic('${t.id}')">
+      <span class="emoji">${t.mark}</span>
+      <span class="tnum">Topic ${i+1}</span>
+      <span class="tname">${esc(t.name)}</span>
+      <span class="tkr">${t.kr}</span>
+      <span class="tmeta"><span>${t.list.length} words</span><span>${m?`<b style="color:var(--burgundy)">${m} to review</b>`:(best!=null?"✓ done":"New")}</span></span>
+      <span class="prog"><i style="width:${best||0}%"></i></span>
+      <span style="font-size:12px;color:var(--muted)">Best score: ${best!=null?best+"%":"—"}</span>
+    </button>`;}).join("");
+}
+function saveName(){store.name=document.getElementById("nameIn").value.trim();save();renderHome();}
+
+/* ============ SETUP ============ */
+function openTopic(id){
+  current=TOPICS.find(t=>t.id===id);
+  const i=TOPICS.indexOf(current);
+  document.getElementById("suNum").textContent="Topic "+(i+1);
+  document.getElementById("suName").textContent=current.name;
+  document.getElementById("suKr").textContent=current.kr;
+  const m=missCount(id);
+  document.getElementById("suMeta").textContent=`${current.list.length} words · ${m} in your mistakes`;
+  document.getElementById("suMissBtn").disabled=!m;
+  document.getElementById("suMissBtn").textContent=m?`Practise my mistakes (${m})`:"No mistakes yet";
+  const mm=mistakesOf(id);
+  document.getElementById("suWords").innerHTML=current.list.map(w=>`<div class="wl ${mm[w.ko]?"miss":""}"><span class="kr">${esc(w.ko)}</span><span>${esc(w.uz)}</span></div>`).join("");
+  go("setup");
+}
+function bindChips(id,key){
+  document.getElementById(id).addEventListener("click",e=>{
+    const b=e.target.closest(".chip"); if(!b) return;
+    [...e.currentTarget.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); cfg[key]=b.dataset.v;
+  });
+}
+bindChips("dirChips","dir"); bindChips("lenChips","len");
+
+/* ============ QUIZ ============ */
+let Q=[], qi=0, answers=[], answered=false, quizActive=false, missMode=false;
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+
+function startQuiz(fromMistakes){
+  if(!current) return;
+  missMode=fromMistakes;
+  let pool=current.list;
+  if(fromMistakes){const mm=mistakesOf(current.id); pool=current.list.filter(w=>mm[w.ko]); if(!pool.length) return;}
+  pool=shuffle(pool);
+  if(!fromMistakes && cfg.len!=="all") pool=pool.slice(0,Math.min(+cfg.len,pool.length));
+  Q=pool.map(w=>{
+    const dir=cfg.dir==="mix"?(Math.random()<.5?"ko":"uz"):cfg.dir;
+    const field=dir==="ko"?"uz":"ko";
+    const seen=new Set([w[field]]);
+    const distract=shuffle(current.list.filter(x=>x!==w && x.uz!==w.uz && x.ko!==w.ko)).filter(x=>{if(seen.has(x[field]))return false;seen.add(x[field]);return true;}).slice(0,3);
+    return {w,dir,opts:shuffle([w,...distract])};
+  });
+  qi=0; answers=[]; go("quiz"); showQ();
+}
+function showQ(){
+  answered=false;
+  const q=Q[qi];
+  document.getElementById("qProg").style.width=(qi/Q.length*100)+"%";
+  document.getElementById("qCount").textContent=`${qi+1} / ${Q.length}`;
+  const word=document.getElementById("qWord");
+  if(q.dir==="ko"){
+    document.getElementById("qLabel").textContent="Choose the O'zbek meaning";
+    word.textContent=q.w.ko; word.className="qword kr";
+    document.getElementById("qSpeak").style.display="";
+  }else{
+    document.getElementById("qLabel").textContent="Choose the Korean word";
+    word.textContent=q.w.uz; word.className="qword lat";
+    document.getElementById("qSpeak").style.display="none";
+  }
+  document.getElementById("qOpts").innerHTML=q.opts.map((o,i)=>
+    `<button class="optn ${q.dir==="uz"?"krf":""}" data-i="${i}" onclick="choose(${i})"><span class="k">${i+1}</span><span>${esc(q.dir==="ko"?o.uz:o.ko)}</span></button>`).join("");
+  document.getElementById("qFb").innerHTML="";
+}
+function choose(i){
+  if(answered) return; answered=true;
+  const q=Q[qi], pick=q.opts[i], ok=pick===q.w;
+  const btns=[...document.querySelectorAll("#qOpts .optn")];
+  btns.forEach((b,j)=>{b.disabled=true; if(q.opts[j]===q.w) b.classList.add("ok");});
+  if(!ok) btns[i].classList.add("bad");
+  const chosenText=q.dir==="ko"?pick.uz:pick.ko;
+  answers.push({w:q.w,ok,chosen:chosenText,dir:q.dir});
+  const mm=mistakesOf(current.id);
+  if(!ok){
+    const e=mm[q.w.ko]||{ko:q.w.ko,uz:q.w.uz,times:0,chosen:[]};
+    e.times++; if(!e.chosen.includes(chosenText)) e.chosen.push(chosenText);
+    e.last=Date.now(); mm[q.w.ko]=e;
+  }else if(missMode && mm[q.w.ko]){ delete mm[q.w.ko]; }
+  save();
+  if(q.dir==="ko") speak(q.w.ko);
+  document.getElementById("qFb").innerHTML=
+    `<span class="fb ${ok?"good":"wrong"}">${ok?"✓ 맞아요! Correct":`✕ Correct answer: <span class="kr">${esc(q.w.ko)}</span> — ${esc(q.w.uz)}`}</span>
+     <button class="btn btn-p" id="nextBtn" onclick="next()">${qi+1<Q.length?"Next →":"See results"}</button>`;
+  document.getElementById("nextBtn").focus();
+}
+function next(){ qi++; if(qi<Q.length) showQ(); else finish(); }
+function finish(){
+  const c=answers.filter(a=>a.ok).length, pct=Math.round(c/answers.length*100);
+  store.stats.quizzes++; store.stats.correct+=c; store.stats.total+=answers.length;
+  awardQuiz(pct,answers.length);
+  if(!missMode) store.best[current.id]=Math.max(store.best[current.id]||0,pct);
+  save();
+  document.getElementById("rScore").textContent=pct+"%";
+  document.getElementById("rRing").style.background=`conic-gradient(var(--tiffany) ${pct*3.6}deg, var(--burgundy-t) 0)`;
+  document.getElementById("rTitle").textContent=pct===100?"완벽해요! Perfect!":pct>=80?"잘했어요! Great job!":pct>=50?"Good effort — keep going!":"Keep practising — 화이팅!";
+  document.getElementById("rSub").textContent=`${c} of ${answers.length} correct · ${current.name}${missMode?" (mistakes practice)":""}`;
+  const m=missCount(current.id);
+  const rb=document.getElementById("rMissBtn"); rb.disabled=!m; rb.textContent=m?`Practise mistakes (${m})`:"No mistakes left 🎉";
+  renderResultList("no");
+  go("result");
+}
+let rf="no";
+document.getElementById("rFilter").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b) return;
+  [...e.currentTarget.children].forEach(c=>c.classList.remove("sel")); b.classList.add("sel"); renderResultList(b.dataset.v);
+});
+function renderResultList(f){
+  rf=f;
+  const list=f==="no"?answers.filter(a=>!a.ok):answers;
+  document.getElementById("rList").innerHTML=list.length?list.map(a=>`
+    <div class="ritem ${a.ok?"ok":"no"}">
+      <span class="ico">${a.ok?"✓":"✕"}</span>
+      <div><div class="w">${esc(a.w.ko)}</div><div class="m">${esc(a.w.uz)}</div></div>
+      <div class="chosen">${a.ok?"":`You chose: <s>${esc(a.chosen)}</s>`}</div>
+    </div>`).join(""):`<div class="empty" style="padding:24px"><h3>No mistakes this round 🎉</h3></div>`;
+}
+
+function speak(t){
+  try{ if(!window.speechSynthesis) return; speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(t); u.lang="ko-KR"; u.rate=.85;
+    const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.startsWith("ko")); if(v) u.voice=v;
+    speechSynthesis.speak(u);}catch(e){}
+}
+function speakCurrent(){ const q=Q[qi]; if(q) speak(q.w.ko); }
+
+document.addEventListener("keydown",e=>{
+  if(!quizActive || document.getElementById("modal").classList.contains("on")) return;
+  if(!answered && /^[1-4]$/.test(e.key)){ const i=+e.key-1; if(Q[qi].opts[i]) choose(i); }
+  else if(answered && e.key==="Enter"){ e.preventDefault(); next(); }
+});
+
+/* ============ MODAL ============ */
+function modal(title,text,okLabel,cb){
+  document.getElementById("mdTitle").textContent=title;
+  document.getElementById("mdText").textContent=text;
+  const ok=document.getElementById("mdOk"); ok.textContent=okLabel;
+  ok.onclick=()=>{closeModal();cb();};
+  document.getElementById("modal").classList.add("on");
+}
+function closeModal(){document.getElementById("modal").classList.remove("on");}
+function askQuit(){ modal("Quit this quiz?","Mistakes you already made are saved. Your score for this round won't be counted.","Quit",()=>openTopic(current.id)); }
+
+/* ============ MISTAKES ============ */
+let mTab="all";
+function renderMistakes(){
+  document.getElementById("mBadge").textContent=totalMiss();
+  const tabs=[{id:"all",label:`All (${totalMiss()})`},...TOPICS.map((t,i)=>({id:t.id,label:`${i+1}. ${t.name} (${missCount(t.id)})`}))];
+  document.getElementById("mTabs").innerHTML=tabs.map(t=>`<button class="chip ${mTab===t.id?"sel":""}" onclick="mTab='${t.id}';renderMistakes()">${esc(t.label)}</button>`).join("");
+  const shown=TOPICS.filter(t=>(mTab==="all"||mTab===t.id)&&missCount(t.id));
+  if(!shown.length){
+    document.getElementById("mBody").innerHTML=`<div class="panel empty"><div class="big">좋아요</div><h3>No mistakes here</h3><p>Take a quiz — any word you choose wrongly will appear here.</p><div class="actions" style="justify-content:center"><button class="btn btn-p" onclick="go('home')">Go to topics</button></div></div>`;
+    return;
+  }
+  document.getElementById("mBody").innerHTML=shown.map(t=>{
+    const rows=Object.values(mistakesOf(t.id)).sort((a,b)=>b.times-a.times);
+    return `<div class="mgroup panel">
+      <h4><span>Topic ${TOPICS.indexOf(t)+1}: ${esc(t.name)} <span class="tkr">${t.kr}</span></span>
+        <span style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-t" style="padding:9px 14px;font-size:14px" onclick="current=TOPICS.find(x=>x.id==='${t.id}');startQuiz(true)">Practise these (${rows.length})</button>
+          <button class="btn btn-o" style="padding:9px 14px;font-size:14px" onclick="clearTopic('${t.id}')">Clear</button>
+        </span></h4>
+      <table class="mtable"><thead><tr><th>Korean</th><th>Correct meaning</th><th class="hide-m">You chose</th><th>Times</th></tr></thead><tbody>
+      ${rows.map(r=>`<tr><td class="kr">${esc(r.ko)}</td><td>${esc(r.uz)}</td><td class="hide-m"><div class="chosenlist">${r.chosen.map(c=>`<span class="ctag">${esc(c)}</span>`).join("")}</div></td><td><span class="times">${r.times}</span></td></tr>`).join("")}
+      </tbody></table></div>`;}).join("");
+}
+function clearTopic(id){
+  const t=TOPICS.find(x=>x.id===id);
+  modal("Clear mistakes?",`Remove all saved mistakes for "${t.name}"?`,"Clear",()=>{store.mistakes[id]={};save();renderMistakes();});
+}
+
+if(!upgrade.profiles[upgrade.active])upgrade.profiles[upgrade.active]=store;
+store=upgrade.profiles[upgrade.active]||store;
+renderHome(); refreshUpgrade();
+</script>
+</body>
+</html>
